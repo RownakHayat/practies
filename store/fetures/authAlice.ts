@@ -1,25 +1,29 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { apiSlice } from "../apislice";
+import { apiSlice } from "./apislice";
 
+
+interface AuthState {
+  user: any; // Define your user type here
+}
 
 const initialState: any = {
-  user: {},
+  user: null,
   permissions: [],
 };
 
 export const authApi = apiSlice
   .enhanceEndpoints({
-    addTagTypes: ["UserRolePermissionList"],
+    addTagTypes: [],
   })
   .injectEndpoints({
-    endpoints: (builder) => ({
+    endpoints: (builder: any) => ({
       login: builder.mutation({
-        query: (data) => ({
+        query: (data: any) => ({
           url: "/auth/login",
           method: "POST",
           body: data,
         }),
-        invalidatesTags: ["UserRolePermissionList"],
+        invalidatesTags: [],
       }),
     }),
   });
@@ -28,7 +32,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    addAuthInformation: (state, action: PayloadAction<{ user: any }>) => {
+    addAuthInformation(state, action: PayloadAction<any>) {
       state.user = action.payload;
     },
     addUserPermissions: (state, action: PayloadAction<{ user: any }>) => {

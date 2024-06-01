@@ -1,10 +1,5 @@
 "use client"
 
-import Link from "next/link"
-import { useEffect } from "react"
-import { addAuthInformation } from "@/store/fetures/auth"
-import { useAppDispatch } from "@/store/fetures/useReduxStore"
-import useAuthStore from "@/store/fetures/zustand/suth"
 import useLayoutStore from "@/store/fetures/zustand/layout"
 import SideBar from "@/components/layout/sidebar/page"
 import NavBar from "@/components/layout/navbar/page"
@@ -16,33 +11,17 @@ type Props = {
 }
 
 const DashBoardLayout = ({ children }: Props) => {
-  const { user } = useAuthStore((state: any) => state)
-  const dispatch = useAppDispatch()
-  useEffect(() => {
-    dispatch(addAuthInformation(user))
-  }, [user])
   
   const { collapse } = useLayoutStore((state: any) => state)
 
   return (
     <>
-      <div
-        className={`transition-body fixed hidden h-screen md:block ${
-          collapse ? "md:w-[300px]" : "md:w-[100px]"
-        }`}
-      >
+      {/* <div
+        className="transition-body fixed hidden h-screen md:block" >
         <SideBar />
-      </div>
-      <div
-        className={`transition-body fixed w-full ${
-          collapse ? "md:left-[300px]" : "md:left-[100px]"
-        } ${
-          collapse
-            ? "md:h-screen md:w-[calc(100%-300px)]"
-            : "md:h-screen md:w-[calc(100%-100px)]"
-        }`}
-      >
-        <nav className="flex h-[70px] w-full items-center justify-between pl-2 pr-8">
+      </div> */}
+      <div>
+        <nav className="w-full ">
           <NavBar />
         </nav>
         <div className="h-[calc(100vh-100px)] bg-[#ECEFF3] shadow-inner dark:bg-black md:rounded-tl-xl overflow-y-auto p-2 md:p-6 ">

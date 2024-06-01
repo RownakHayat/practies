@@ -1,15 +1,23 @@
-"use client"
+'use client';
 
-import { Form } from "@/components/ui/form"
+import React from 'react';
+import { UseFormReturn } from 'react-hook-form';
+import { Form } from "@/components/ui/form";
 
-const FormContainer = ({ form, onSubmit, children }: any) => {
-    return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                {children}
-            </form>
-        </Form>
-    )
+interface FormContainerProps {
+  form: UseFormReturn<any>;
+  onSubmit: (values: any) => void;
+  children: React.ReactNode;
 }
 
-export default FormContainer
+const FormContainer: React.FC<FormContainerProps> = ({ form, onSubmit, children }) => {
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {children}
+      </form>
+    </Form>
+  );
+};
+
+export default FormContainer;

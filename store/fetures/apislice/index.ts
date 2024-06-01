@@ -17,7 +17,7 @@ const HttpApiQuery = fetchBaseQuery({
 })
 
 export const apiSlice = createApi({
-    reducerPath: 'miapss_api_query',
+    reducerPath: 'tea-home',
     baseQuery: HttpApiQuery,
     tagTypes: [],
     endpoints: () => ({}),
