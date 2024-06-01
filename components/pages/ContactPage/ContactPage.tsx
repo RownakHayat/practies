@@ -8,7 +8,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
@@ -23,14 +23,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
 import formSchema from "./schema/formSchema";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 interface FormData {
   username: string;
   dob: string; // dob should be a string for form handling
-  gender: string;
+  gender: string; // Gender should be a string to match the zod schema
+  isAdult: boolean;
 }
 
 const ContactPage = () => {
@@ -41,14 +41,15 @@ const ContactPage = () => {
     defaultValues: {
       username: "",
       dob: "",
-      gender: "",
+      gender: "male", // Default value for gender
+      isAdult: false,
     },
   });
 
   const onSubmit = (values: FormData) => {
     const submittedData = {
       ...values,
-      dob: date ? format(date, "dd/mm/yyyy") : "",
+      dob: date ? format(date, "yyyy-MM-dd") : values.dob,
     };
     console.log(submittedData);
   };
@@ -56,7 +57,7 @@ const ContactPage = () => {
   return (
     <div>
       <FormContainer form={form} onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-span-6 col-span-4">
+        <div className="">
           <FormField
             control={form.control}
             name="username"
@@ -94,19 +95,52 @@ const ContactPage = () => {
               />
             </PopoverContent>
           </Popover>
+          <FormField
+            control={form.control}
+            name="dob"
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormControl>
+                  <FormInput type="hidden" {...field} value={date ? format(date, "yyyy-MM-dd") : ""} />
+                </FormControl>
+                {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+              </FormItem>
+            )}
+          />
         </div>
         <div className="">
-        <Select>
-            <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select gender" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectItem value="male">Male</SelectItem>
-                <SelectItem value="female">Female</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-                
-            </SelectContent>
-            </Select>
+          <FormField
+            control={form.control}
+            name="gender"
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormLabel>Gender</FormLabel>
+                <FormControl>
+                  <select {...field}>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </FormControl>
+                {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="">
+          <FormField
+            control={form.control}
+            name="isAdult"
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormLabel>Are you at least 18 years old?</FormLabel>
+                <FormControl>
+                  <FormInput type="checkbox" {...field} />
+                </FormControl>
+                {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+              </FormItem>
+            )}
+          />
         </div>
         <Button type="submit">Submit</Button>
       </FormContainer>
