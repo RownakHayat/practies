@@ -1,7 +1,6 @@
 "use client"
 
 import useLayoutStore from "@/store/fetures/zustand/layout"
-import SideBar from "@/components/layout/sidebar/page"
 import NavBar from "@/components/layout/navbar/page"
 
 
@@ -16,15 +15,11 @@ const DashBoardLayout = ({ children }: Props) => {
 
   return (
     <>
-      {/* <div
-        className="transition-body fixed hidden h-screen md:block" >
-        <SideBar />
-      </div> */}
       <div>
         <nav className="w-full ">
           <NavBar />
         </nav>
-        <div className="h-[calc(100vh-100px)] bg-[#ECEFF3] shadow-inner dark:bg-black md:rounded-tl-xl overflow-y-auto p-2 md:p-6 ">
+        <div className="h-[calc(100vh-100px)] bg-[#ECEFF3] shadow dark:bg-black overflow-y-auto p-2 md:p-6 mx-14  my-3">
           {children}
         </div>
         <footer className="z-10 shadow-2xl ">

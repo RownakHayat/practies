@@ -6,8 +6,8 @@ const NavBar = () => {
   
 
   return (
-    <>
-      <Menu className="bg-green-300 text-red-300">
+    <div className="p-10 bg-green-300 text-red-300">
+      <Menu>
         <MenuItem>
         <Link href="/">Home</Link>
         </MenuItem>
@@ -18,7 +18,7 @@ const NavBar = () => {
         <MenuItem>Home</MenuItem>
         <MenuItem>Home</MenuItem>
       </Menu>
-    </>
+    </div>
   )
 }
 

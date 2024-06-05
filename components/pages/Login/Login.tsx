@@ -1,5 +1,6 @@
 "use client";
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -60,9 +61,9 @@ const Login = () => {
                                         </label>
                                     </div>
                                     <div>
-                                        <a href="javascript:void(0);" className="text-sm text-blue-600 hover:text-blue-500">
+                                        <Link href="javascript:void(0);" className="text-sm text-blue-600 hover:text-blue-500">
                                             Forgot Password?
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="!mt-10">
