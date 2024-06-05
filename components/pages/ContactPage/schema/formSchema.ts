@@ -1,24 +1,15 @@
-import { z } from "zod";
-import { parse, differenceInYears } from "date-fns";
+import { z, number } from "zod";
 
 const formSchema = z.object({
-  username: z.string()
-    .min(2, "Username must be at least 2 characters long")
-    .max(50, "Username must be at most 50 characters long"),
-  dob: z.string()
-    .min(10, "Date of Birth is required")
-    .refine((dob) => {
-      const parsedDate = parse(dob, "yyyy-MM-dd", new Date());
-      return !isNaN(parsedDate.getTime());
-    }, { message: "Date of Birth must be a valid date" })
-    .refine((dob) => {
-      const parsedDate = parse(dob, "yyyy-MM-dd", new Date());
-      const age = differenceInYears(new Date(), parsedDate);
-      return age >= 18;
-    }, { message: "You must be at least 18 years old" }),
-  gender: z.enum(["male", "female", "other"], {
-    required_error: "Gender is required",
-  }),
+  username: z.string().min(1, "Username must be at least 2 characters long"),
+  email: z.string().email("must be type email"),
+  dob: z.string(),
+  gender: z.string(),
+  form_date: z.string(),
+  end_date: z.string(),
+  review: z.number(),
+  rating: z.number(),
+  isAdult: z.boolean(),
 });
 
 export default formSchema;

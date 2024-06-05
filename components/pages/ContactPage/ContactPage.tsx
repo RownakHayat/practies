@@ -15,7 +15,6 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -23,25 +22,36 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import StarRatingComponent from "react-star-rating-component";
 import formSchema from "./schema/formSchema";
-import { Input } from "@/components/ui/input";
 
 interface FormData {
   username: string;
-  dob: string; // dob should be a string for form handling
-  gender: string; // Gender should be a string to match the zod schema
+  email: string;
+  dob: string;
+  gender: string;
+  form_date: string;
+  end_date: string;
+  review: number;
+  rating: number;
   isAdult: boolean;
 }
 
 const ContactPage = () => {
   const [date, setDate] = useState<Date | undefined>();
+  const [rating, setRating] = useState<number>(0);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      email: "",
       dob: "",
-      gender: "male", // Default value for gender
+      gender: "",
+      form_date: "",
+      end_date: "",
+      review: 0,
+      rating: 0,
       isAdult: false,
     },
   });
@@ -50,14 +60,20 @@ const ContactPage = () => {
     const submittedData = {
       ...values,
       dob: date ? format(date, "yyyy-MM-dd") : values.dob,
+      rating: rating,
     };
     console.log(submittedData);
+  };
+
+  const onStarClick = (nextValue: number) => {
+    setRating(nextValue);
+    form.setValue("rating", nextValue);
   };
 
   return (
     <div>
       <FormContainer form={form} onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="">
+        <div>
           <FormField
             control={form.control}
             name="username"
@@ -67,7 +83,9 @@ const ContactPage = () => {
                 <FormControl>
                   <FormInput placeholder="Name" {...field} />
                 </FormControl>
-                {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                {fieldState.error && (
+                  <FormMessage>{fieldState.error.message}</FormMessage>
+                )}
               </FormItem>
             )}
           />
@@ -101,14 +119,20 @@ const ContactPage = () => {
             render={({ field, fieldState }) => (
               <FormItem>
                 <FormControl>
-                  <FormInput type="hidden" {...field} value={date ? format(date, "yyyy-MM-dd") : ""} />
+                  <FormInput
+                    type="hidden"
+                    {...field}
+                    value={date ? format(date, "yyyy-MM-dd") : ""}
+                  />
                 </FormControl>
-                {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                {fieldState.error && (
+                  <FormMessage>{fieldState.error.message}</FormMessage>
+                )}
               </FormItem>
             )}
           />
         </div>
-        <div className="">
+        <div>
           <FormField
             control={form.control}
             name="gender"
@@ -122,22 +146,31 @@ const ContactPage = () => {
                     <option value="other">Other</option>
                   </select>
                 </FormControl>
-                {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                {fieldState.error && (
+                  <FormMessage>{fieldState.error.message}</FormMessage>
+                )}
               </FormItem>
             )}
           />
         </div>
-        <div className="">
+        <div>
           <FormField
             control={form.control}
-            name="isAdult"
+            name="rating"
             render={({ field, fieldState }) => (
               <FormItem>
-                <FormLabel>Are you at least 18 years old?</FormLabel>
+                <FormLabel>Rate the site</FormLabel>
                 <FormControl>
-                  <FormInput type="checkbox" {...field} />
+                  <StarRatingComponent
+                    name="rating"
+                    starCount={5}
+                    value={rating}
+                    onStarClick={onStarClick}
+                  />
                 </FormControl>
-                {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                {fieldState.error && (
+                  <FormMessage>{fieldState.error.message}</FormMessage>
+                )}
               </FormItem>
             )}
           />
