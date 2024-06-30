@@ -14,7 +14,7 @@ const NavBar = () => {
         <MenuItem>
         <Link href="/admin/contact">Contact</Link>
         </MenuItem>
-        <MenuItem>Home</MenuItem>
+        <MenuItem href="/admin/address">Address</MenuItem>
         <MenuItem>Home</MenuItem>
         <MenuItem>Home</MenuItem>
       </Menu>

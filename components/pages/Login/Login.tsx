@@ -1,8 +1,8 @@
 "use client";
+import useTitle from '@/components/common/hooks/useTitle';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface Form {
@@ -12,7 +12,7 @@ interface Form {
 
 const Login = () => {
     const [loggedIn, setLoggedIn] = useState(false);
-
+    useTitle('Login')
     const router = useRouter();
 
     const { register, handleSubmit, formState: { errors } } = useForm<Form>();
@@ -61,9 +61,9 @@ const Login = () => {
                                         </label>
                                     </div>
                                     <div>
-                                        <Link href="javascript:void(0);" className="text-sm text-blue-600 hover:text-blue-500">
+                                        <a href="javascript:void(0);" className="text-sm text-blue-600 hover:text-blue-500">
                                             Forgot Password?
-                                        </Link>
+                                        </a>
                                     </div>
                                 </div>
                                 <div className="!mt-10">
