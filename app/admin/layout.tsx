@@ -16,9 +16,9 @@ const DashBoardLayout = ({ children }: Props) => {
   return (
     <>
       <div>
-        <nav className="w-full ">
+        
           <NavBar />
-        </nav>
+        
         <div className="h-[calc(100vh-100px)] bg-[#ECEFF3] shadow dark:bg-black overflow-y-auto p-2 md:p-6 mx-14  my-3">
           {children}
         </div>

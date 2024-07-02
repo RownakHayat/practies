@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import formSchema from './schema/formSchema';
@@ -7,28 +7,31 @@ import FormContainer from '@/components/common/Form/FormContainer';
 import FormInput from '@/components/common/Form/FormInput';
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
+import Location from './locaton/locaton';
 
 interface FormData {
     name: string;
-    from: string;
-    to: string;
-  }
-  
+    origin: string;
+    destination: string;
+}
+
 const Address: React.FC = () => {
+    const [origin, setOrigin] = useState<string>('');
+    const [destination, setDestination] = useState<string>('');
+
     const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
           name: "",
-          from: "",
-          to: "",
+          origin: "",
+          destination: "",
         },
     });
 
     const onSubmit = (values: FormData): void => {
-        const submittedData = {
-          ...values,
-        };
-        console.log(submittedData);
+        setOrigin(values.origin);
+        setDestination(values.destination);
+        console.log("form",values);
     };
 
     return (
@@ -52,12 +55,12 @@ const Address: React.FC = () => {
             <div>
               <FormField
                 control={form.control}
-                name="from"
+                name="origin"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>From</FormLabel>
                     <FormControl>
-                      <FormInput placeholder="From" {...field} />
+                      <FormInput placeholder="Origin" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -66,12 +69,12 @@ const Address: React.FC = () => {
             <div>
               <FormField
                 control={form.control}
-                name="to"
+                name="destination"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>To</FormLabel>
                     <FormControl>
-                      <FormInput placeholder="To" {...field} />
+                      <FormInput placeholder="Destination" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -80,6 +83,9 @@ const Address: React.FC = () => {
             <Button type="submit">Search</Button>
           </div>
         </FormContainer>
+        <div className="mt-8">
+          <Location origin={origin} destination={destination} />
+        </div>
       </div>
     );
 }

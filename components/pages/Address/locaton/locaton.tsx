@@ -1,11 +1,13 @@
-"use client"
-import React, { useState } from 'react';
+import React from 'react';
 import { DirectionsRenderer, DirectionsService, GoogleMap, LoadScript } from '@react-google-maps/api';
 
-const Location: React.FC = () => {
-    const [response, setResponse] = useState<any>(null);
-    const origin = "uttara 11 zamzam tower";
-    const destination = "dhanmondi";
+interface LocationProps {
+    origin: string;
+    destination: string;
+}
+
+const Location: React.FC<LocationProps> = ({ origin, destination }) => {
+    const [response, setResponse] = React.useState<any>(null);
 
     const directionsCallback = (res: any) => {
         console.log('Directions response:', res);
@@ -33,7 +35,7 @@ const Location: React.FC = () => {
                         lng: 90.4125
                     }}
                 >
-                    {destination && origin && (
+                    {origin && destination && (
                         <DirectionsService
                             options={{
                                 destination: destination,
