@@ -1,14 +1,16 @@
-import useTitle from '@/components/common/hooks/useTitle'
-import React from 'react'
+import useTitle from '@/components/common/hooks/useTitle';
+import React from 'react';
+import './styleDashboard.css';  
 
 const Dashboard = () => {
-  useTitle('Dashboard')
+  useTitle('Dashboard');
   return (
     <div className='container'>
-      Dashboard welcome to my .....
-      
+      <div className="box">
+      <p>Tea</p>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;
